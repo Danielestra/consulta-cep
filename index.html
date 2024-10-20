@@ -9,6 +9,15 @@
         h2 { color: #2c3e50; }
         code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; }
         pre { background: #ecf0f1; padding: 10px; border-radius: 4px; }
+        .link-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -126,6 +135,9 @@ const contador = criarContador();
 console.log(contador()); // 1
 console.log(contador()); // 2
     </code></pre>
+
+    <!-- Botão para a página consulta-cep.html -->
+    <button class="link-button" onclick="window.location.href='consulta-cep.html'">Ir para Consulta CEP</button>
 
 </body>
 </html>
