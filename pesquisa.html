@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceitos de JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #2c3e50; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; }
+        pre { background: #ecf0f1; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1>Conceitos de JavaScript</h1>
+
+    <h2>A) Assincronismo</h2>
+    <p>O assincronismo permite que operações sejam executadas sem bloquear a execução do código. Aqui estão algumas abordagens:</p>
+
+    <h3>1) AJAX (Asynchronous Javascript And XML)</h3>
+    <p>AJAX permite que páginas da web sejam atualizadas de forma assíncrona.</p>
+    <pre><code>
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://api.exemplo.com/dados", true);
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(JSON.parse(xhr.responseText));
+    }
+};
+xhr.send();
+    </code></pre>
+
+    <h3>2) Promises</h3>
+    <p>Promises são objetos que representam a eventual conclusão ou falha de uma operação assíncrona.</p>
+    <pre><code>
+const fetchData = () => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.exemplo.com/dados", true);
+        xhr.onload = () => resolve(JSON.parse(xhr.responseText));
+        xhr.onerror = () => reject("Erro na requisição");
+        xhr.send();
+    });
+};
+
+fetchData().then(data => console.log(data)).catch(err => console.error(err));
+    </code></pre>
+
+    <h3>3) Fetch API</h3>
+    <p>A Fetch API é uma interface moderna para fazer requisições assíncronas.</p>
+    <pre><code>
+fetch("https://api.exemplo.com/dados")
+    .then(response => {
+        if (!response.ok) throw new Error("Erro na requisição");
+        return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+    </code></pre>
+
+    <h3>4) Async / Await</h3>
+    <p>Async/Await oferece uma sintaxe mais clara para trabalhar com Promises.</p>
+    <pre><code>
+const fetchData = async () => {
+    try {
+        const response = await fetch("https://api.exemplo.com/dados");
+        if (!response.ok) throw new Error("Erro na requisição");
+        const data = await response.json();
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+};
+    </code></pre>
+
+    <h3>5) Vantagens/Desvantagens</h3>
+    <ul>
+        <li><strong>AJAX:</strong> Vantagem: compatível com navegadores mais antigos. Desvantagem: mais verboso.</li>
+        <li><strong>Promises:</strong> Vantagem: melhor tratamento de erros. Desvantagem: código pode ficar difícil de ler em encadeamentos complexos.</li>
+        <li><strong>Fetch API:</strong> Vantagem: mais simples e legível. Desvantagem: não suporta abortar requisições nativamente.</li>
+        <li><strong>Async/Await:</strong> Vantagem: código mais limpo e fácil de entender. Desvantagem: depende de suporte a Promises.</li>
+    </ul>
+
+    <h2>B) Outros Tópicos</h2>
+
+    <h3>1) Hoisting</h3>
+    <p>Hoisting é o comportamento do JavaScript de mover declarações de variáveis e funções para o topo do escopo.</p>
+
+    <h3>2) Arrow Functions</h3>
+    <p>Arrow functions são funções anônimas que não têm seu próprio <code>this</code>. Isso as torna diferentes das funções normais.</p>
+    <pre><code>
+const normalFunction = function() {
+    console.log(this); // refere-se ao objeto que chama a função
+};
+
+const arrowFunction = () => {
+    console.log(this); // refere-se ao contexto de onde foi definida
+};
+    </code></pre>
+
+    <h3>3) Desestruturação (Destructuring)</h3>
+    <p>Desestruturação é uma forma de extrair valores de arrays ou propriedades de objetos.</p>
+    <pre><code>
+const pessoa = { nome: "João", idade: 30 };
+const { nome, idade } = pessoa; // desestruturação de objeto
+console.log(nome, idade);
+
+const numeros = [1, 2, 3];
+const [a, b] = numeros; // desestruturação de array
+console.log(a, b);
+    </code></pre>
+
+    <h3>4) Closure</h3>
+    <p>Closures são funções que têm acesso ao seu escopo externo, mesmo após a execução do escopo externo.</p>
+    <pre><code>
+function criarContador() {
+    let contador = 0;
+    return function() {
+        contador++;
+        return contador;
+    };
+}
+
+const contador = criarContador();
+console.log(contador()); // 1
+console.log(contador()); // 2
+    </code></pre>
+
+</body>
+</html>
